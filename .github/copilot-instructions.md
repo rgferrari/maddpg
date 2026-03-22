@@ -12,9 +12,38 @@
 - Agent interface contract lives in `maddpg/__init__.py` (`AgentTrainer`).
 
 ## Build And Run
-- Install from repo root: `pip install -e .`
-- Train from `experiments/`: `python train.py --scenario simple`
-- Common defaults are defined in `experiments/train.py` (`parse_args`).
+
+### Recommended: Legacy Conda Environment
+This repo requires Python 3.5 and TensorFlow 1.8.0. Set up a legacy environment:
+
+```bash
+# Create legacy Python 3.5 environment with exact dependencies
+conda create -n maddpg_py35 python=3.5.6 tensorflow=1.8.0 gym=0.10.5 numpy=1.14.5
+conda activate maddpg_py35
+pip install -e .
+pip install git+https://github.com/openai/multiagent-particle-envs.git
+```
+
+### Training
+From repo root:
+```bash
+conda activate maddpg_py35
+cd experiments
+SUPPRESS_MA_PROMPT=1 python train.py --scenario simple --exp-name myexp --num-episodes 1000
+```
+
+Or use the smoke-test script for quick validation:
+```bash
+conda activate maddpg_py35
+./run_smoke.sh
+```
+
+### Key Points
+- `--exp-name` is **required** (experiment name for output files).
+- `SUPPRESS_MA_PROMPT=1` suppresses MPE's interactive deprecation warning (only needed for non-interactive runs).
+- Common training parameters are defined in `experiments/train.py` (`parse_args`).
+- Checkpoints saved to `--save-dir` (default: `/tmp/policy/`).
+- Reward curves saved to `--plots-dir` (default: `./learning_curves/`).
 
 ## Environment Constraints
 - Code is TensorFlow 1.x style and uses `tensorflow.contrib`.

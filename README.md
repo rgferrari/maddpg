@@ -13,6 +13,36 @@ vary from those reported in the paper.
 
 ## Installation
 
+### Legacy Environment Setup (Recommended)
+
+This codebase requires TensorFlow 1.8.0 and Python 3.5, which are difficult to install on modern systems. We recommend using Conda to create a legacy environment:
+
+```bash
+# Create a legacy Python 3.5 environment with exact dependencies
+conda create -n maddpg_py35 python=3.5.6 tensorflow=1.8.0 gym=0.10.5 numpy=1.14.5
+conda activate maddpg_py35
+
+# Install the repo in editable mode
+pip install -e .
+
+# Install Multi-Agent Particle Environments (MPE)
+pip install git+https://github.com/openai/multiagent-particle-envs.git
+```
+
+### Running Training
+
+```bash
+conda activate maddpg_py35
+cd experiments
+SUPPRESS_MA_PROMPT=1 python train.py --scenario simple --exp-name myexp
+```
+
+**Note:** `SUPPRESS_MA_PROMPT=1` suppresses MPE's interactive deprecation warning.
+
+### Alternative: Manual Installation
+
+If Conda is not available:
+
 - To install, `cd` into the root directory and type `pip install -e .`
 
 - Known dependencies: Python (3.5.4), OpenAI gym (0.10.5), tensorflow (1.8.0), numpy (1.14.5)
